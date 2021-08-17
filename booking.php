@@ -63,7 +63,7 @@ if (isset($_POST['update'])) // when click on Update button
         function updateMyText() {
             var start = document.getElementById('start');
             var end = document.getElementById('end');
-            var price = Math.abs(start.value - end.value);
+            var price = Math.abs(start.value.split(':')[0] - end.value.split(':')[0]);
             // alert(price);
             document.getElementById("price").value = price * 2;
 
@@ -80,7 +80,7 @@ if (isset($_POST['update'])) // when click on Update button
     <div class="control-group">
             <label class="control-label">User Id</label>
             <div class="controls">
-            <input type="text" name="user_id" id="user_id" value="" placeholder="Enter User Id" Required > 
+            <input type="text" name="user_id" id="user_id" value="" placeholder="Enter User Id" Required >
             </div>
     </div>
 
@@ -88,26 +88,23 @@ if (isset($_POST['update'])) // when click on Update button
     <div class="control-group">
             <label class="control-label">Train Name</label>
             <div class="controls">
-            <input type="text" name="station_name" value="<?php echo $data['train_name'] ?>"  Required readonly> 
+            <input type="text" name="station_name" value="<?php echo $data['train_name'] ?>"  Required readonly>
             </div>
     </div>
 
     <div class="control-group">
             <label class="control-label">Platform Number</label>
             <div class="controls">
-            <input type="text" name="platform_id" value="<?php echo $data['platform_id'] ?>"  Required readonly> 
+            <input type="text" name="platform_id" value="<?php echo $data['platform_id'] ?>"  Required readonly>
             </div>
     </div>
 
     <div class="control-group">
             <label class="control-label">Schedule Id</label>
             <div class="controls">
-            <input type="text" name="schedule_id" value="<?php echo $data['schedule_id'] ?>"  Required readonly> 
+            <input type="text" name="schedule_id" value="<?php echo $data['schedule_id'] ?>"  Required readonly>
             </div>
     </div>
-        
-
-
 
         <div class="control-group">
             <label class="control-label">Start</label>
@@ -116,7 +113,7 @@ if (isset($_POST['update'])) // when click on Update button
                     <?php
                     while ($rows = mysqli_fetch_array($startQry)) {
                     ?>
-                        <option value="<?php echo $rows['points']; ?>"><?php echo $rows['station_name']; ?></option>
+                        <option value="<?php echo $rows['points']; ?>:<?php echo $rows['station_name']; ?>"><?php echo $rows['station_name']; ?></option>
 
                     <?php
                     }
@@ -134,7 +131,7 @@ if (isset($_POST['update'])) // when click on Update button
                     <?php
                     while ($rows = mysqli_fetch_array($endQry)) {
                     ?>
-                        <option value="<?php echo $rows['points']; ?>"><?php echo $rows['station_name']; ?></option>
+                        <option value="<?php echo $rows['points']; ?>:<?php echo $rows['station_name']; ?>"><?php echo $rows['station_name']; ?></option>
 
                     <?php
                     }
@@ -150,6 +147,31 @@ if (isset($_POST['update'])) // when click on Update button
             </div>
         </div>
 
+    <!-- ------------------------ Hidden inforamtion to send to booking info ------------------- -->
+
+        <div class="control-group">
+            <div class="controls">
+            <input type="text" name="train_name" value="<?php echo $data['train_name'] ?>"  Required readonly hidden>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+            <input type="text" name="platform_id" value="<?php echo $data['platform_id'] ?>"  Required readonly hidden>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+            <input type="text" name="date" value="<?php echo $data['date'] ?>"  Required readonly hidden>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+            <input type="text" name="time" value="<?php echo $data['time'] ?>"  Required readonly hidden>
+            </div>
+        </div>
 
 
         <button class="btn btn-success" type="submit" name="book" value="book"> Book </button>
